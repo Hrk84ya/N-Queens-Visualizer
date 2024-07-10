@@ -14,7 +14,7 @@ The N-Queens problem is solved using a backtracking algorithm. The program gener
 - Canvas: tkinter's Canvas widget is utilized for drawing the chessboard and queens.
 - Buttons and Events: tkinter widgets used for navigation between solutions and resizing the board.
 
-## Screenshots used
+## Screenshots
 ### Empty board
 <img src="/images/Empty-Board.png" width="600">
 
