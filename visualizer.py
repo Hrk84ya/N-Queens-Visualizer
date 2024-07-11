@@ -1,7 +1,6 @@
-#Kindly install tkinter module in order to use the gui form
 import tkinter as tk
 
-# Colors
+# Defining the colors
 COLORS = ['red', 'green', 'blue', 'yellow', 'cyan', 'magenta', 'orange', 'purple', 'teal', 'pink', 'brown']
 
 class NQueensGUI:
@@ -16,8 +15,8 @@ class NQueensGUI:
         
         self.canvas = tk.Canvas(self.root, width=self.canvas_size, height=self.canvas_size)
         self.canvas.pack()
-        self.canvas.bind("<Button-1>", self.canvas_clicked)  
-        self.canvas.focus_set()  
+        self.canvas.bind("<Button-1>", self.canvas_clicked) 
+        self.canvas.focus_set()  # Ensure canvas can receive keyboard events
         
         self.next_button = tk.Button(self.root, text="Next", command=self.next_solution)
         self.next_button.pack(side=tk.LEFT, padx=10)
@@ -44,6 +43,7 @@ class NQueensGUI:
         self.canvas.bind("<Left>", lambda event: self.previous_solution())
         self.canvas.bind("<Right>", lambda event: self.next_solution())
     
+    #function to solve the n-queen problem
     def solve_n_queens(self):
         def is_safe(board, row, col):
             for r in range(row):
@@ -62,7 +62,7 @@ class NQueensGUI:
         
         self.solutions = list(solve(0))
     
-    #function to create the board
+    #function to draw the board
     def draw_board(self):
         self.canvas.delete("all")
         for i in range(self.n):
@@ -70,7 +70,7 @@ class NQueensGUI:
                 color = 'white' if (i + j) % 2 == 0 else 'black'
                 self.canvas.create_rectangle(i * self.square_size, j * self.square_size,
                                              (i + 1) * self.square_size, (j + 1) * self.square_size,
-                                             fill=color)
+                                            fill=color)
         
         if self.current_solution_index != -1:
             for row, col in enumerate(self.board):
@@ -81,10 +81,12 @@ class NQueensGUI:
                 # Draw queen as a circle in the middle of the square
                 self.canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill=color)
     
+    #updating the solution counter to show all the possible answers
     def update_solution_counter(self):
         total_solutions = len(self.solutions)
         self.solution_counter_label.config(text=f"Solution: {self.current_solution_index + 1} / {total_solutions}")
     
+    #function to navigate to the next solution
     def next_solution(self, event=None):
         if self.solutions:
             self.current_solution_index = (self.current_solution_index + 1) % len(self.solutions)
@@ -92,6 +94,7 @@ class NQueensGUI:
             self.draw_board()
             self.update_solution_counter()
     
+    #function to navigate to the previous solution
     def previous_solution(self, event=None):
         if self.solutions:
             self.current_solution_index = (self.current_solution_index - 1) % len(self.solutions)
@@ -99,6 +102,7 @@ class NQueensGUI:
             self.draw_board()
             self.update_solution_counter()
     
+    #function to resize the board
     def resize_board(self):
         try:
             new_size = int(self.resize_entry.get())
@@ -121,11 +125,12 @@ class NQueensGUI:
         # Allow clicking on the canvas to navigate between solutions
         self.next_solution()
 
-#Main function
+#main function to run the program
 def main():
     while True:
         try:
             n = int(input("Enter the number of queens (minimum 4): "))
+            #if number of queens is less than the desired amount then rerun the code 
             if n < 4:
                 print("Error: Minimum number of queens must be 4.")
                 print()
@@ -135,11 +140,11 @@ def main():
             print("Error: Please enter a valid integer.")
     
     root = tk.Tk()
-    root.title("N-Queens")
+    root.title("N-Queens")  #Title of the page
     
     app = NQueensGUI(root, n)
     
-    root.mainloop()
+    root.mainloop()  #for continuously running the program
 
 if __name__ == "__main__":
     main()
